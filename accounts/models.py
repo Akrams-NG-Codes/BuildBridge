@@ -1,6 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django_tenants.models import TenantMixin, DomainMixin
+from django.conf import settings
+
+# django-tenants is optional for local (SQLite) development. When it's not
+# enabled, provide lightweight abstract fallbacks so models can import
+# without requiring Postgres schemas at dev time.
+try:
+    from django_tenants.models import TenantMixin, DomainMixin
+except Exception:
+    class TenantMixin(models.Model):
+        class Meta:
+            abstract = True
+
+    class DomainMixin(models.Model):
+        class Meta:
+            abstract = True
 
 
 class Developer(TenantMixin):

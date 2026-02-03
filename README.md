@@ -167,6 +167,8 @@ Frontend `.env` file:
 VITE_API_URL=http://localhost:8000/api
 ```
 
+Note about local development: `buildbridge/settings.py` now conditionally enables tenant-related settings (like `TENANT_MODEL` and `DEFAULT_FILE_STORAGE`) only when `django_tenants` is present in `INSTALLED_APPS`. This keeps the default SQLite development workflow working without requiring Postgres/django-tenants.
+
 ## PWA Features
 
 ### Service Worker

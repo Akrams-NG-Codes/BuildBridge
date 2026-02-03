@@ -346,3 +346,9 @@ MIT - Feel free to use this for your projects!
 👉 **Follow [WINDOWS_SETUP.md](WINDOWS_SETUP.md) for step-by-step setup instructions**
 
 Happy coding! 🚀
+
+## Notes about local (SQLite) development
+
+- The project supports multi-tenant deployments via `django-tenants` (Postgres schemas). For quick local development we keep using SQLite.
+- I adjusted `buildbridge/settings.py` so tenant-related settings (like `TENANT_MODEL` and the default file storage) are only enabled when `django_tenants` is present in `INSTALLED_APPS`. This keeps the dev workflow simple when using SQLite.
+- If you switch to PostgreSQL for multi-tenant testing, ensure `django-tenants` is installed and enabled and update `DATABASES` accordingly.

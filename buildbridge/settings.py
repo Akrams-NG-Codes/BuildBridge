@@ -150,7 +150,11 @@ CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:3000'
 CELERY_BROKER_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
 
-TENANT_MODEL = "accounts.Developer"
-TENANT_DOMAIN_MODEL = "accounts.Domain"
-
-DEFAULT_FILE_STORAGE = 'django_tenants.storage.TenantFileSystemStorage'
+if 'django_tenants' in INSTALLED_APPS:
+    TENANT_MODEL = "accounts.Developer"
+    TENANT_DOMAIN_MODEL = "accounts.Domain"
+    DEFAULT_FILE_STORAGE = 'django_tenants.storage.TenantFileSystemStorage'
+else:
+    TENANT_MODEL = None
+    TENANT_DOMAIN_MODEL = None
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
