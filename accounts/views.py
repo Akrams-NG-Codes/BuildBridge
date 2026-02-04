@@ -50,12 +50,37 @@ class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
+        """Get current user profile"""
         return Response(UserSerializer(request.user).data)
     
     def put(self, request):
+        """Update user profile"""
         user = request.user
         serializer = UserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def patch(self, request):
+        """Partially update user profile"""
+        user = request.user
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeveloperListView(generics.ListCreateAPIView):
+    """List all developers or create a new developer"""
+    queryset = Developer.objects.all()
+    serializer_class = DeveloperSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class DeveloperDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """Retrieve, update, or delete a developer"""
+    queryset = Developer.objects.all()
+    serializer_class = DeveloperSerializer
+    permission_classes = [permissions.IsAuthenticated]

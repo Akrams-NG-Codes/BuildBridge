@@ -5,6 +5,9 @@ import { useStore } from './lib/store';
 import { Layout } from './components/Layout';
 import { Login } from './components/Login';
 import { Dashboard } from './components/Dashboard';
+import { Projects } from './components/Projects';
+import { Upload } from './components/Upload';
+import { Profile } from './components/Profile';
 import './index.css';
 
 const queryClient = new QueryClient({
@@ -49,9 +52,9 @@ function App() {
             }
           >
             <Route index element={<Dashboard />} />
-            <Route path="projects" element={<div className="text-gray-600">Projects List Coming Soon</div>} />
-            <Route path="upload" element={<div className="text-gray-600">Upload Coming Soon</div>} />
-            <Route path="profile" element={<div className="text-gray-600">Profile Coming Soon</div>} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="upload" element={<Upload />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Routes>
       </BrowserRouter>
