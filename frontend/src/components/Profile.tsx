@@ -22,7 +22,7 @@ export function Profile() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: (data) => api.put('/api/auth/profile/', data),
+    mutationFn: (data: typeof formData) => api.put('/api/auth/profile/', data),
     onSuccess: (data) => {
       queryClient.setQueryData(['profile'], data);
       setShowNotification({ type: 'success', message: 'Profile updated successfully!' });

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
 import { AlertCircle, Plus, Trash2, Edit2 } from 'lucide-react';
@@ -21,7 +21,7 @@ export function Projects() {
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => api.post('/api/projects/', data),
+    mutationFn: (data: typeof formData) => api.post('/api/projects/', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       setIsOpen(false);
@@ -30,7 +30,7 @@ export function Projects() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: (data: any) => api.put(`/api/projects/${data.id}/`, data),
+    mutationFn: (data: typeof formData & { id: number }) => api.put(`/api/projects/${data.id}/`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       setEditingId(null);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api';
-import { Upload as UploadIcon, Trash2, MessageSquare } from 'lucide-react';
+import { Upload as UploadIcon, MessageSquare } from 'lucide-react';
 
 export function Upload() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
@@ -36,7 +36,7 @@ export function Upload() {
   });
 
   const commentMutation = useMutation({
-    mutationFn: (data) => api.post('/api/updates/comments/', data),
+    mutationFn: (data: { update: number; text: string }) => api.post('/api/updates/comments/', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['updates', selectedProject] });
       setCommentText('');
