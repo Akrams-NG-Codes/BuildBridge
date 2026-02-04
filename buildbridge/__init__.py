@@ -5,10 +5,14 @@
 try:
     from django.template import context as _dj_context
     def _context_copy_compat(self):
-        # Build a fresh instance of the same class and copy internal state.
+        # Build a fresh instance of the same class without calling
+        # its __init__ (some Context subclasses require a `request`).
         cls = self.__class__
-        duplicate = cls()
-        # copy the dict stack if present
+        duplicate = object.__new__(cls)
+        # shallow-copy the instance dict if present
+        if hasattr(self, '__dict__'):
+            duplicate.__dict__ = self.__dict__.copy()
+        # copy the dict stack if present, ensure separate dict copies
         if hasattr(self, 'dicts'):
             duplicate.dicts = [d.copy() for d in self.dicts]
         # preserve autoescape if present
